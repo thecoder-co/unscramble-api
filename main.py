@@ -3,8 +3,13 @@ import unscramble as unc
 import time
 import  requests
 app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"details": "UnscrambleAPI...   baseurl/unscramble/<word>/<length>"}
+
 @app.get("/unscramble/{word}/{length}")
-def unscramble_len(length: int,word):
+async def unscramble_len(length: int,word):
     start = time.time()
     words = unc.main(length, word)
     end = time.time()
