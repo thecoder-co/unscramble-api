@@ -2,8 +2,8 @@ from fastapi import FastAPI
 import unscramble as unc
 import time
 import  requests
-unscramble = FastAPI()
-@unscramble.get("/unscramble/{word}/{length}")
+app = FastAPI()
+@app.get("/unscramble/{word}/{length}")
 def unscramble_len(length: int,word):
     start = time.time()
     words = unc.main(length, word)
@@ -11,7 +11,7 @@ def unscramble_len(length: int,word):
     timed = end - start
     return {"words": words, "time": timed}
 
-#@unscramble.get("/search/{word}")
+#@unscrmamble.get("/search/{word}")
 #def search(word):
 #    start = time.time()
 #    app_id = '9d7691cf1c35eafb5194dbb6a49b1932ed0f19de'
