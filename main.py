@@ -3,7 +3,20 @@ import unscramble as unc
 import time
 from typing import Optional
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/", response_class=HTMLResponse)
 def root():
@@ -26,9 +39,7 @@ def unscramble(word: str, length: Optional[int] = None):
     if length:
         start = time.time()
         words = unc.main(length, word)
-        end = time.time()
     else:
         start = time.time()
         words = unc.main(len(word), word)
-        end = time.time()
-    return {"string": word, "unscrambled_words": words, "time": end - start}
+    return {"string": word, "unscrambled_words": words, "time": time.time() - start}
